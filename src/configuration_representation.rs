@@ -20,6 +20,7 @@ pub struct ProviderConfig {
 
 #[derive(Serialize, Deserialize)]
 pub struct ModuleConfiguration {
+    #[serde(default)]
     pub outputs: HashMap<String, Output>,
     pub resources: Vec<Resource>,
 }
@@ -50,7 +51,7 @@ pub struct Resource {
 pub struct Provisioner {
     #[serde(rename = "type")]
     pub provisioner_type: String,
-    pub expression: BlockExpressionRepresentation,
+    pub expressions: BlockExpressionRepresentation,
 }
 
 #[derive(Serialize, Deserialize)]

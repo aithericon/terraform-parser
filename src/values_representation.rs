@@ -3,6 +3,7 @@ use std::collections::HashMap;
 
 #[derive(Serialize, Deserialize)]
 pub struct ValuesRepresentation {
+    #[serde(default)]
     pub outputs: HashMap<String, Output>,
     pub root_module: Module,
 }
