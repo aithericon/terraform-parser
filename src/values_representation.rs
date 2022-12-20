@@ -1,11 +1,14 @@
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize};
 use std::collections::HashMap;
 
 #[derive(Serialize, Deserialize)]
 pub struct ValuesRepresentation {
+    #[serde(default)]
     pub outputs: HashMap<String, Output>,
-    pub root_module: Module,
+    // #[serde(deserialize_with = "deserialize_field")]
+    pub root_module: Option<Module>,
 }
+
 
 #[derive(Serialize, Deserialize)]
 pub struct Output {
@@ -17,7 +20,7 @@ pub struct Output {
 pub struct Module {
     /// `None` for the root module
     pub address: Option<String>,
-    pub resources: Vec<Resource>,
+    pub resources: Option<Vec<Resource>>,
     pub child_modules: Option<Vec<Module>>,
 }
 

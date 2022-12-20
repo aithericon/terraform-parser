@@ -15,7 +15,7 @@ pub struct PlanRepresentation {
     pub proposed_unknown: Option<ValuesRepresentation>,
     pub variables: HashMap<String, Variable>,
     pub resource_changes: Vec<ResourceChange>,
-    pub output_changes: HashMap<String, OutputChange>,
+    pub output_changes: Option<HashMap<String, OutputChange>>,
 }
 
 #[derive(Serialize, Deserialize)]
