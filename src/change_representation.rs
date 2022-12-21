@@ -17,7 +17,7 @@ pub struct ChangeRepresentation {
     pub replace_paths: Option<Vec<Vec<String>>>,
 }
 
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Debug, PartialEq)]
 pub enum Field {
     Bool(bool),
     Map(HashMap<String, serde_json::Value>),
@@ -41,7 +41,7 @@ fn deserialize_field<'de, D>(deserializer: D) -> Result<Field, D::Error>
     }
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "kebab-case")]
 pub enum Action {
     NoOp,

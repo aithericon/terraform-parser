@@ -38,7 +38,7 @@ pub struct Resource {
     pub sensitive_values: HashMap<String, serde_json::Value>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum Mode {
     Managed,

@@ -43,7 +43,7 @@ pub struct OutputChange {
     pub change: Option<ChangeRepresentation>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "snake_case")]
 pub enum ActionReason {
     ReplaceBecauseTainted,
