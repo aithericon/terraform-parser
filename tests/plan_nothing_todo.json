@@ -1,0 +1,246 @@
+{
+  "format_version": "1.1",
+  "terraform_version": "1.3.6",
+  "variables": {
+    "exoscale_api_key": {
+      "value": "EXO"
+    },
+    "exoscale_secret_key": {
+      "value": "k8"
+    },
+    "registry_key": {
+      "value": "Q"
+    },
+    "registry_user": {
+      "value": "rob"
+    },
+    "worker-count": {
+      "value": "0"
+    }
+  },
+  "planned_values": {
+    "root_module": {}
+  },
+  "prior_state": {
+    "format_version": "1.0",
+    "terraform_version": "1.3.6",
+    "values": {
+      "root_module": {
+        "resources": [
+          {
+            "address": "data.exoscale_compute_template.gpu_template",
+            "mode": "data",
+            "type": "exoscale_compute_template",
+            "name": "gpu_template",
+            "provider_name": "registry.terraform.io/exoscale/exoscale",
+            "schema_version": 0,
+            "values": {
+              "filter": "featured",
+              "id": "5fe9a0bd-cc28-4008-a35e-36e4d70c01eb",
+              "name": "gpu",
+              "username": "ubuntu",
+              "zone": "de-fra-1"
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "data.exoscale_security_group.default",
+            "mode": "data",
+            "type": "exoscale_security_group",
+            "name": "default",
+            "provider_name": "registry.terraform.io/exoscale/exoscale",
+            "schema_version": 0,
+            "values": {
+              "id": "228f4c01-ff2f-4817-a4a1-28f7318e6745",
+              "name": "default"
+            },
+            "sensitive_values": {}
+          },
+          {
+            "address": "data.exoscale_security_group.worker",
+            "mode": "data",
+            "type": "exoscale_security_group",
+            "name": "worker",
+            "provider_name": "registry.terraform.io/exoscale/exoscale",
+            "schema_version": 0,
+            "values": {
+              "id": "f6ef592c-8afa-47ee-8796-ba3a664a2822",
+              "name": "worker"
+            },
+            "sensitive_values": {}
+          }
+        ]
+      }
+    }
+  },
+  "configuration": {
+    "provider_config": {
+      "exoscale": {
+        "name": "exoscale",
+        "full_name": "registry.terraform.io/exoscale/exoscale",
+        "version_constraint": "0.40.0",
+        "expressions": {
+          "key": {
+            "references": [
+              "var.exoscale_api_key"
+            ]
+          },
+          "secret": {
+            "references": [
+              "var.exoscale_secret_key"
+            ]
+          }
+        }
+      }
+    },
+    "root_module": {
+      "resources": [
+        {
+          "address": "exoscale_compute_instance.nomad-cpu-worker",
+          "mode": "managed",
+          "type": "exoscale_compute_instance",
+          "name": "nomad-cpu-worker",
+          "provider_config_key": "exoscale",
+          "provisioners": [
+            {
+              "type": "local-exec",
+              "expressions": {
+                "command": {
+                  "references": [
+                    "self.name",
+                    "self",
+                    "self.public_ip_address",
+                    "self",
+                    "count.index",
+                    "self.public_ip_address",
+                    "self",
+                    "self.public_ip_address",
+                    "self"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "remote-exec",
+              "expressions": {
+                "inline": {
+                  "references": [
+                    "var.registry_key",
+                    "var.registry_user"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "file",
+              "expressions": {
+                "destination": {
+                  "constant_value": "/home/ubuntu/docker-auth.json"
+                },
+                "source": {
+                  "constant_value": "/secrets/container-registry"
+                }
+              }
+            }
+          ],
+          "expressions": {
+            "disk_size": {
+              "constant_value": 25
+            },
+            "name": {
+              "references": [
+                "count.index"
+              ]
+            },
+            "security_group_ids": {
+              "references": [
+                "data.exoscale_security_group.default.id",
+                "data.exoscale_security_group.default",
+                "data.exoscale_security_group.worker.id",
+                "data.exoscale_security_group.worker"
+              ]
+            },
+            "ssh_key": {
+              "constant_value": "milan-buero"
+            },
+            "template_id": {
+              "references": [
+                "data.exoscale_compute_template.gpu_template.id",
+                "data.exoscale_compute_template.gpu_template"
+              ]
+            },
+            "type": {
+              "constant_value": "standard.small"
+            },
+            "zone": {
+              "constant_value": "de-fra-1"
+            }
+          },
+          "schema_version": 0,
+          "count_expression": {
+            "references": [
+              "var.worker-count"
+            ]
+          }
+        },
+        {
+          "address": "data.exoscale_compute_template.gpu_template",
+          "mode": "data",
+          "type": "exoscale_compute_template",
+          "name": "gpu_template",
+          "provider_config_key": "exoscale",
+          "expressions": {
+            "id": {
+              "constant_value": "5fe9a0bd-cc28-4008-a35e-36e4d70c01eb"
+            },
+            "zone": {
+              "constant_value": "de-fra-1"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "data.exoscale_security_group.default",
+          "mode": "data",
+          "type": "exoscale_security_group",
+          "name": "default",
+          "provider_config_key": "exoscale",
+          "expressions": {
+            "name": {
+              "constant_value": "default"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "data.exoscale_security_group.worker",
+          "mode": "data",
+          "type": "exoscale_security_group",
+          "name": "worker",
+          "provider_config_key": "exoscale",
+          "expressions": {
+            "name": {
+              "constant_value": "worker"
+            }
+          },
+          "schema_version": 0
+        }
+      ],
+      "variables": {
+        "exoscale_api_key": {
+          "default": "EXO"
+        },
+        "exoscale_secret_key": {
+          "default": "k8E"
+        },
+        "registry_key": {
+          "default": "QK"
+        },
+        "registry_user": {
+          "default": "rob"
+        },
+        "worker-count": {}
+      }
+    }
+  }
+}
