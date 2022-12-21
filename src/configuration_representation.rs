@@ -4,13 +4,13 @@ use crate::values_representation::*;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct ConfigurationRepresentation {
     pub provider_configs: Option<HashMap<String, ProviderConfig>>,
     pub root_module: ModuleConfiguration,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct ProviderConfig {
     pub name: String,
     pub alias: String,
@@ -18,20 +18,20 @@ pub struct ProviderConfig {
     pub expressions: BlockExpressionRepresentation,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct ModuleConfiguration {
     #[serde(default)]
     pub outputs: HashMap<String, Output>,
     pub resources: Vec<Resource>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Output {
     pub expression: serde_json::Value,
     pub sensetive: Option<bool>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Resource {
     pub address: String,
     pub mode: Mode,
@@ -47,14 +47,14 @@ pub struct Resource {
     pub module_calls: Option<HashMap<String, ModuleCall>>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Provisioner {
     #[serde(rename = "type")]
     pub provisioner_type: String,
     pub expressions: BlockExpressionRepresentation,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct ModuleCall {
     pub resolved_source: String,
     pub expressions: BlockExpressionRepresentation,

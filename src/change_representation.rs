@@ -1,7 +1,7 @@
 use serde::{Deserialize, Deserializer, Serialize};
 use std::collections::HashMap;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct ChangeRepresentation {
     pub actions: Vec<Action>,
     #[serde(default)]
@@ -17,7 +17,7 @@ pub struct ChangeRepresentation {
     pub replace_paths: Option<Vec<Vec<String>>>,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Debug)]
 pub enum Field {
     Bool(bool),
     Map(HashMap<String, serde_json::Value>),
@@ -41,7 +41,7 @@ fn deserialize_field<'de, D>(deserializer: D) -> Result<Field, D::Error>
     }
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "kebab-case")]
 pub enum Action {
     NoOp,

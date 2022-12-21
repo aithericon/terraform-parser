@@ -1,7 +1,7 @@
 use serde::{Deserialize, Deserializer, Serialize};
 use std::collections::HashMap;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct ValuesRepresentation {
     #[serde(default)]
     pub outputs: HashMap<String, Output>,
@@ -10,13 +10,13 @@ pub struct ValuesRepresentation {
 }
 
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Output {
     pub value: serde_json::Value,
     pub sensitive: bool,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Module {
     /// `None` for the root module
     pub address: Option<String>,
@@ -24,7 +24,7 @@ pub struct Module {
     pub child_modules: Option<Vec<Module>>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Resource {
     pub address: String,
     pub mode: Mode,
@@ -38,7 +38,7 @@ pub struct Resource {
     pub sensitive_values: HashMap<String, serde_json::Value>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum Mode {
     Managed,

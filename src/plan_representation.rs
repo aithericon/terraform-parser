@@ -6,7 +6,7 @@ use crate::configuration_representation::*;
 use crate::state_representation::*;
 use crate::values_representation::*;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct PlanRepresentation {
     pub format_version: String,
     pub prior_state: StateRepresentation,
@@ -18,12 +18,12 @@ pub struct PlanRepresentation {
     pub output_changes: Option<HashMap<String, OutputChange>>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Variable {
     pub value: serde_json::Value,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct ResourceChange {
     pub address: String,
     pub previous_address: Option<String>,
@@ -38,12 +38,12 @@ pub struct ResourceChange {
     pub action_reason: Option<ActionReason>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct OutputChange {
     pub change: Option<ChangeRepresentation>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "snake_case")]
 pub enum ActionReason {
     ReplaceBecauseTainted,
